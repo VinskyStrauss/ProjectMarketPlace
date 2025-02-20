@@ -4,9 +4,11 @@ import { User } from "./User";
 export interface Product {
   id: number | null;
   product_name: string;
+  product_unit: number;
   product_description: string;
-  price: number;
+  prodduct_link: string;
+  product_price: string;
   product_image: string;
-  user: User;
-  categories: Category[];
+  user?: User;
+  categories?: Category[];
 }
