@@ -2,6 +2,7 @@ import React from "react";
 import { Navigate, Route, RouteProps, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
+import ProductPage from "./pages/ProductPage";
 
 type RouteConfig = RouteProps & {
   isPrivate?: boolean;
@@ -19,6 +20,10 @@ export const routes: RouteConfig[] = [
   {
     path: "/profile",
     element: <ProfilePage />,
+  },
+  {
+    path: "/product/:id",
+    element: <ProductPage />,
   },
 ];
 

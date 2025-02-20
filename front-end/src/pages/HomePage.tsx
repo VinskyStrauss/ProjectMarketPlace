@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { PageLayout } from "../layouts/PageLayout";
 import { SearchBar } from "../components/SearchBar";
 import { Product } from "../interfaces/Product";
+import { useNavigate } from "react-router-dom";
 
 function HomePage() {
+  const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>([]);
   //filtered products
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
@@ -106,6 +108,7 @@ function HomePage() {
           <div className="grid grid-cols-4 gap-6 mt-6 w-4/5">
             {filteredProducts.map((product) => (
               <div
+                onClick={() => navigate(`/product/${product.id}`)}
                 key={product.id}
                 className="flex flex-col w-80 h-80 bg-white shadow-md rounded-lg overflow-hidden 
                    transition-transform transform hover:scale-105 hover:shadow-xl"

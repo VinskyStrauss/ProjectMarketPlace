@@ -6,7 +6,7 @@ export interface Product {
   product_name: string;
   product_unit: number;
   product_description: string;
-  prodduct_link: string;
+  product_link: string;
   product_price: string;
   product_image: string;
   user?: User;
