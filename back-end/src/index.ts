@@ -9,6 +9,8 @@ import { RecipeController } from "./controller/recipe.controller";
 import { RecipeIngredientController } from "./controller/recipeIngredient.controller"; */
 import { Product } from "./entities/Product";
 import { User } from "./entities/User";
+import { ProductController } from "./controller/product.controller";
+import { UserController } from "./controller/user.controller";
 
 export const SM = {} as {
   server: http.Server;
@@ -56,10 +58,8 @@ const initializeServer = async () => {
   app.get("/", (req: Request, res: Response) => {
     res.send("Hello World!");
   });
-  app.use("/categories", CategoryController);
-  app.use("/ingredients", IngredientController);
-  app.use("/recipes", RecipeController);
-  app.use("/recipeIngredients", RecipeIngredientController);
+  app.use("/products", ProductController);
+  app.use("/users", UserController);
 };
 
 initializeServer();
