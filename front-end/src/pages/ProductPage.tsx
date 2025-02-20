@@ -8,6 +8,7 @@ function ProductPage() {
   const navigate = useNavigate();
   const param = useParams();
   const [product, setProduct] = useState<Product>();
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     const productApiURL = `http://localhost:3000/products/${param.id}`;
@@ -28,15 +29,15 @@ function ProductPage() {
         >
           <IoMdArrowRoundBack />
         </button>
-        <div className="flex flex-row gap-5">
-          <div>
+        <div className="flex flex-row gap-5 w-full mt-10">
+          <div className="w-1/4">
             <img
-              className="w-full h-full object-cover"
+              className="w-80 h-80 object-contain"
               src={product?.product_image}
               alt={product?.product_name}
             />
           </div>
-          <div className="flex flex-col justify-between">
+          <div className="flex flex-row justify-between w-2/4">
             <div>
               <h1 className="font-bold text-2xl">{product?.product_name}</h1>
               <a
@@ -53,9 +54,13 @@ function ProductPage() {
                 Price:{product?.product_price}
               </p>
             </div>
-            <button className="bg-green-400 rounded-md text-white font-bold text-xl p-2 font-mono">
-              Buy Now
-            </button>
+            <div className="flex flex-col w-1/4 ml-20">
+              <div className="w-full">
+                <button className="bg-green-400 rounded-md text-white font-bold text-xl p-2 font-mono">
+                  Buy Now
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
