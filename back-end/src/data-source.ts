@@ -1,6 +1,7 @@
 import { DataSource } from "typeorm";
 import { Product } from "./entities/Product";
 import { User } from "./entities/User";
+import { Category } from "./entities/Category";
 
 //require dotenv
 require("dotenv").config();
@@ -13,7 +14,7 @@ export const AppDataSource = new DataSource({
   database: process.env.MYSQL_DATABASE,
   synchronize: true,
   logging: true,
-  entities: [Product, User],
+  entities: [Product, User, Category],
   subscribers: [],
   migrations: [],
 });

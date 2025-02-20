@@ -14,5 +14,5 @@ export class User {
 
   // One user can have multiple products
   @OneToMany(() => Product, (product) => product.user)
-  products: Product[];
+  products?: Product[];
 }

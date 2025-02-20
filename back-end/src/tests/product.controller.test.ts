@@ -1,68 +1,48 @@
 import Request from "supertest";
 import { expect } from "chai";
-import { mockCategory } from "./MockUpData/category.mockup";
+import { mockProduct } from "./MockUpData/product.mockup";
 
-describe("CategoryController", () => {
-  const baseURL = "localhost:3000/categories";
-  var localCategoryID = "";
-  var localCategoryName = "";
-  const randomCategoryID = "36248179";
-
-  console.log("mockCategory: ", mockCategory);
-
-  it("can create a new Category", (done) => {
+describe("ProductController", () => {
+  const baseURL = "localhost:3000/products";
+  var localProductID = "";
+  var localProductName = "";
+  const randomProductID = "36248179";
+  it("can create a new Product", (done) => {
     Request(baseURL)
       .post("/")
-      .send(mockCategory)
+      .send(mockProduct)
       .set("Accept", "application/json")
       .set("Content-Type", "application/json")
       .end((err, res) => {
         expect(res.statusCode).to.be.equal(201);
         expect(res.body.id).to.be.not.null;
-        expect(res.body.category_name).to.be.equal(mockCategory.category_name);
+        expect(res.body.product_name).to.be.equal(mockProduct.product_name);
         if (err) {
           throw err;
         }
-        localCategoryID = res.body.id;
-        localCategoryName = res.body.name;
+        localProductID = res.body.id;
+        localProductName = res.body.name;
         done();
       });
   });
-
-  it("can not create a new Category with the same name", (done) => {
+  it("can get an existing Product by id", (done) => {
     Request(baseURL)
-      .post("/")
-      .send(mockCategory)
-      .set("Accept", "application/json")
-      .set("Content-Type", "application/json")
-      .end((err, res) => {
-        expect(res.statusCode).to.be.equal(400);
-        if (err) {
-          throw err;
-        }
-        done();
-      });
-  });
-
-  it("can get an existing Category by id", (done) => {
-    Request(baseURL)
-      .get("/" + localCategoryID)
+      .get("/" + localProductID)
       .set("Accept", "application/json")
       .set("Content-Type", "application/json")
       .end((err, res) => {
         expect(res.statusCode).to.be.equal(200);
-        expect(res.body.id).to.be.equal(localCategoryID);
-        expect(res.body.name).to.be.equal(localCategoryName);
+        expect(res.body.id).to.be.equal(localProductID);
+        expect(res.body.name).to.be.equal(localProductName);
         if (err) {
           throw err;
         }
         done();
       });
   });
-
-  it("can not get a non-existing Category by id", (done) => {
+  it("can not get a non-existing Product by id", (done) => {
     Request(baseURL)
-      .get("/" + randomCategoryID)
+      .get("/" + randomProductID)
       .set("Accept", "application/json")
       .set("Content-Type", "application/json")
       .end((err, res) => {
@@ -73,8 +53,7 @@ describe("CategoryController", () => {
         done();
       });
   });
-
-  it("can get all Categories", (done) => {
+  it("can get all Products", (done) => {
     Request(baseURL)
       .get("/")
       .set("Accept", "application/json")
@@ -87,26 +66,24 @@ describe("CategoryController", () => {
         done();
       });
   });
-
-  it("can update an existing Category", (done) => {
+  it("can update an existing Product", (done) => {
     Request(baseURL)
-      .put("/put/" + localCategoryID)
-      .send({ name: "Updated Category" })
+      .put("/put/" + localProductID)
+      .send({ name: "Updated Product" })
       .set("Accept", "application/json")
       .set("Content-Type", "application/json")
       .end((err, res) => {
         expect(res.statusCode).to.be.equal(200);
-        expect(res.body.category_name).to.be.equal("Updated Category");
+        expect(res.body.product_name).to.be.equal("Updated Product");
         if (err) {
           throw err;
         }
         done();
       });
   });
-
-  it("can delete an existing Category", (done) => {
+  it("can delete an existing Product", (done) => {
     Request(baseURL)
-      .delete("/delete/" + localCategoryID)
+      .delete("/delete/" + localProductID)
       .set("Accept", "application/json")
       .set("Content-Type", "application/json")
       .end((err, res) => {

@@ -43,6 +43,7 @@ router.get("/:id", async (req, res) => {
 
 // router to create a new category
 router.post("/", async (req, res) => {
+  console.log("Creating category:", req.body);
   try {
     const existingCategory = await SM.categoryRepository.findOne({
       where: { category_name: req.body.name },
@@ -53,7 +54,8 @@ router.post("/", async (req, res) => {
     }
 
     const newCategory = await SM.categoryRepository.save({
-      category_name: req.body.name,
+      category_name: req.body.category_name,
+      category_description: req.body.category_description,
     });
 
     return res.status(201).send(newCategory);

@@ -1,5 +1,5 @@
 import React from "react";
-import { PageLayout } from "../layout/PageLayout";
+import { PageLayout } from "../layouts/PageLayout";
 
 function ProfilePage() {
   return (

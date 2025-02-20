@@ -45,14 +45,15 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const existinguser = await SM.userRepository.findOne({
-      where: { user_name: req.body.name },
+      where: { user_name: req.body.user_name },
     });
 
     if (existinguser) {
       return res.status(400).send("user with the same name already exists");
     }
     const newuser = await SM.userRepository.save({
-      user_name: req.body.name,
+      user_name: req.body.user_name,
+      user_description: req.body.user_description,
     });
 
     return res.status(201).send(newuser);

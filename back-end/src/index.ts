@@ -12,6 +12,7 @@ import { User } from "./entities/User";
 import { ProductController } from "./controller/product.controller";
 import { UserController } from "./controller/user.controller";
 import { Category } from "./entities/Category";
+import { CategoryController } from "./controller/category.controller";
 
 export const SM = {} as {
   server: http.Server;
@@ -31,6 +32,7 @@ export const connectDatabase = async () => {
   SM.em = SM.orm.createEntityManager();
   SM.userRepository = SM.em.getRepository(User);
   SM.productRepository = SM.em.getRepository(Product);
+  SM.categoryRepository = SM.em.getRepository(Category);
 };
 
 const initializeServer = async () => {
@@ -60,6 +62,7 @@ const initializeServer = async () => {
   app.get("/", (req: Request, res: Response) => {
     res.send("Hello World!");
   });
+  app.use("/categories", CategoryController);
   app.use("/products", ProductController);
   app.use("/users", UserController);
 };

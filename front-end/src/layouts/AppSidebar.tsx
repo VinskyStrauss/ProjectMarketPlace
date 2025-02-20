@@ -21,7 +21,7 @@ const SidebarItem = ({
       <button
         type="button"
         className={`flex gap-2 w-full items-center p-2 text-black rounded-lg group
-        ${selected ? "bg-white" : "hover:bg-gray-300"}`}
+        ${selected ? "bg-gray-200" : ""}`}
         onClick={onClick}
       >
         {icon}
@@ -40,29 +40,18 @@ export const AppSidebar = () => {
   return (
     <aside
       id="sidebar-multi-level-sidebar"
-      className="flex flex-col h-screen sidebar-bg px-2 pt-[2rem] w-1/7 "
+      className="flex flex-row h-screen sidebar-bg px-2 pt-[2rem] w-full justify-between"
     >
       <div className="py-4">
-        <div className="flex px-3 justify-between items-center text-black">
+        <div className="flex px-3 gap-6 justify-between items-center text-black">
+          <img src="/assets/shop-cart.svg" alt="logo" className="h-8" />
           <Link to="/" className="font-mono text-xl">
-            <img src="/assets/shop-cart.svg" alt="logo" className="h-8" />
             Project MarketPlace
           </Link>
         </div>
       </div>
-      <div className={"w-full mb-2 border-b border-gray-300"} />
       <div className="h-full px-3 hover:overflow-y-auto overflow-hidden">
-        <p className="text-md font-mono font-bold text-white ">Navigation</p>
-        <ul className="my-3 space-y-2 font-regular">
-          <SidebarItem
-            onClick={() => {
-              navigate("/home");
-            }}
-            icon={<AiOutlineHome />}
-            selected={location.pathname === "/home"}
-          >
-            Home
-          </SidebarItem>
+        <ul className="flex flex-row my-3 gap-2 font-regular">
           <SidebarItem
             onClick={() => {
               navigate("/profile");

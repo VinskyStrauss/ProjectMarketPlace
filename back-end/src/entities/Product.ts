@@ -10,8 +10,8 @@ export class Product {
   @Column()
   product_name: string;
 
-  @Column()
-  product_unit: string;
+  @Column("double")
+  product_unit: number;
 
   @Column("text")
   product_description: string;
@@ -19,16 +19,17 @@ export class Product {
   @Column("text")
   product_link: string;
 
-  @Column("double")
-  product_price: number;
+  @Column("text")
+  product_price: string;
+
+  @Column("text", { nullable: true })
+  product_image: string;
 
   // Many products can belong to one user
   @ManyToOne(() => User, (user) => user.products)
-  user: User;
+  user?: User;
 
   // Many Products can belong to One Category
-  @ManyToOne(() => Category, (category) => category.products, {
-    nullable: true,
-  })
-  category: Category;
+  @ManyToOne(() => Category, (category) => category.id)
+  categories?: Category;
 }
