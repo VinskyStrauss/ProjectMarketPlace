@@ -11,6 +11,7 @@ import { Product } from "./entities/Product";
 import { User } from "./entities/User";
 import { ProductController } from "./controller/product.controller";
 import { UserController } from "./controller/user.controller";
+import { Category } from "./entities/Category";
 
 export const SM = {} as {
   server: http.Server;
@@ -19,6 +20,7 @@ export const SM = {} as {
   // Add other repositories here
   userRepository: Repository<User>;
   productRepository: Repository<Product>;
+  categoryRepository: Repository<Category>;
 };
 
 // to initialize the initial connection with the database, register all entities
