@@ -7,14 +7,15 @@ function HomePage() {
   const [products, setProducts] = useState<Product[]>([]);
   //filtered products
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
 
   //State for search
   const [search, setSearch] = useState<string>("");
 
   //Filter by price
-  const [price, setPrice] = useState(0);
-  const minPrice = 0;
-  const maxPrice = 5000;
+  const [price, setPrice] = useState(2500);
+  const minPrice = 100;
+  const maxPrice = 2500;
 
   //Take all of the products from the API
   useEffect(() => {
@@ -27,19 +28,35 @@ function HomePage() {
   }, []);
 
   //Filter products based on search
+  // Update filters when search, price, or brands change
   useEffect(() => {
-    if (search.toLowerCase() === "") {
-      setFilteredProducts(products);
-    } else {
-      setFilteredProducts(
-        products.filter(
-          (product) =>
-            product.product_name.toLowerCase().includes(search.toLowerCase()) &&
-            product.product_price <= "$" + price.toString()
-        )
-      );
-    }
-  }, [search, price, products]);
+    console.log("Products", products);
+    setFilteredProducts(
+      products.filter((product) => {
+        const matchesSearch = product.product_name
+          .toLowerCase()
+          .includes(search.toLowerCase());
+
+        const matchesPrice =
+          parseFloat(product.product_price.replace("$", "")) <= price;
+
+        const matchesBrand =
+          selectedBrands.length === 0 ||
+          selectedBrands.some((brand) =>
+            product.product_name.toLowerCase().includes(brand.toLowerCase())
+          );
+
+        return matchesSearch && matchesPrice && matchesBrand;
+      })
+    );
+  }, [search, price, selectedBrands, products]);
+
+  // Handle brand selection
+  const handleBrandSelection = (brand: string) => {
+    setSelectedBrands((prev) =>
+      prev.includes(brand) ? prev.filter((b) => b !== brand) : [...prev, brand]
+    );
+  };
 
   return (
     <PageLayout>
@@ -51,9 +68,19 @@ function HomePage() {
             <div className="p-2">
               <div>
                 <p className="text-xl font-bold font-mono">Brand</p>
+                {["Samsung", "Apple", "Moto", "Nokia"].map((brand) => (
+                  <label key={brand} className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={selectedBrands.includes(brand)}
+                      onChange={() => handleBrandSelection(brand)}
+                    />
+                    <span>{brand}</span>
+                  </label>
+                ))}
               </div>
               {/* Price Slider */}
-              <div className="p-2">
+              <div>
                 <p className="text-xl font-bold font-mono">Price</p>
                 <div className="flex flex-col">
                   <input
