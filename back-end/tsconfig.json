@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2016",
+    "module": "commonjs",
+    "rootDir": "./src/",
+    "outDir": "./dist/",
+    "emitDecoratorMetadata": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "strictPropertyInitialization": false,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "removeComments": true,
+    "typeRoots": ["node_modules/@types"],
+    "sourceMap": false,
+    "baseUrl": "./" /* Skip type checking all .d.ts files. */
+  },
+  "files": ["src/index.ts"],
+  "include": ["./**/*.ts"],
+  "exclude": ["node_modules", "dist"]
+}

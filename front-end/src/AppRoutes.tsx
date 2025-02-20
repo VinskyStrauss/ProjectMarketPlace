@@ -1,6 +1,5 @@
 import React from "react";
 import { Navigate, Route, RouteProps, Routes } from "react-router-dom";
-import App from "./App";
 import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
 
