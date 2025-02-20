@@ -10,6 +10,7 @@ function HomePage() {
   //filtered products
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   //State for search
   const [search, setSearch] = useState<string>("");
@@ -48,7 +49,15 @@ function HomePage() {
             product.product_name.toLowerCase().includes(brand.toLowerCase())
           );
 
-        return matchesSearch && matchesPrice && matchesBrand;
+        const matchesCategory =
+          selectedCategories.length === 0 ||
+          selectedCategories.some((category) =>
+            product.categories
+              ?.map((c) => c.category_name.toLowerCase())
+              .includes(category.toLowerCase())
+          );
+
+        return matchesSearch && matchesPrice && matchesBrand && matchesCategory;
       })
     );
   }, [search, price, selectedBrands, products]);
@@ -59,7 +68,14 @@ function HomePage() {
       prev.includes(brand) ? prev.filter((b) => b !== brand) : [...prev, brand]
     );
   };
-
+  // Handle category selection
+  const handleCategorySelection = (category: string) => {
+    setSelectedCategories((prev) =>
+      prev.includes(category)
+        ? prev.filter((b) => b !== category)
+        : [...prev, category]
+    );
+  };
   return (
     <PageLayout>
       <div className="mx-36">
@@ -68,6 +84,19 @@ function HomePage() {
           <div className="w-1/5 p-4">
             <p className="text-xl font-bold font-mono">Filter</p>
             <div className="p-2">
+              <div>
+                <p className="text-xl font-bold font-mono">Category</p>
+                {["Phone", "Laptop & Computer"].map((category) => (
+                  <label key={category} className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={selectedCategories.includes(category)}
+                      onChange={() => handleCategorySelection(category)}
+                    />
+                    <span>{category}</span>
+                  </label>
+                ))}
+              </div>
               <div>
                 <p className="text-xl font-bold font-mono">Brand</p>
                 {["Samsung", "Apple", "Moto", "Nokia"].map((brand) => (
