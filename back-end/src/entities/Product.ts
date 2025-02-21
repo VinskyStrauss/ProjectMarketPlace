@@ -9,6 +9,8 @@ export class Product {
 
   @Column()
   product_name: string;
+  @Column()
+  product_rating: string;
 
   @Column("double")
   product_unit: number;

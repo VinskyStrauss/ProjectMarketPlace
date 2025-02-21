@@ -3,6 +3,7 @@ import { PageLayout } from "../layouts/PageLayout";
 import { SearchBar } from "../components/SearchBar";
 import { Product } from "../interfaces/Product";
 import { useNavigate } from "react-router-dom";
+import { renderStars } from "../components/RenderStars";
 
 function HomePage() {
   const navigate = useNavigate();
@@ -158,6 +159,14 @@ function HomePage() {
                   <h2 className="text-sm font-semibold text-gray-800">
                     {product.product_name}
                   </h2>
+                  <p className="flex items-center space-x-1 text-sm text-gray-600">
+                    <span>Rating:</span>
+                    <span className="flex">
+                      {renderStars(product.product_rating)}
+                    </span>
+                    <span>({product.product_rating})</span>
+                  </p>
+
                   <p className="text-sm text-gray-600 truncate">
                     {product.product_description}
                   </p>

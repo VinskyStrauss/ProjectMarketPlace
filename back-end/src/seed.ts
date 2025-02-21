@@ -75,7 +75,8 @@ const seed = async () => {
 
       const newProduct = new Product();
       newProduct.product_name = productData.product_title;
-      newProduct.product_description = productData.product_delivery || ""; // Ensure it exists
+      newProduct.product_rating = productData.product_star_rating;
+      newProduct.product_description = productData.delivery || ""; // Ensure it exists
       newProduct.product_price = productData.product_price;
       newProduct.product_image = productData.product_photo; // Correct key for image
       newProduct.product_link = productData.product_url;
@@ -119,7 +120,8 @@ const seed = async () => {
 
       const newProduct = new Product();
       newProduct.product_name = productData.product_title;
-      newProduct.product_description = productData.product_delivery || ""; // Ensure it exists
+      newProduct.product_rating = productData.product_star_rating;
+      newProduct.product_description = productData.delivery || ""; // Ensure it exists
       newProduct.product_price = productData.product_price;
       newProduct.product_image = productData.product_photo; // Correct key for image
       newProduct.product_link = productData.product_url;

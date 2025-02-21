@@ -49,6 +49,7 @@ router.post("/", async (req, res) => {
   try {
     const newproduct = await SM.productRepository.save({
       product_name: req.body.product_name,
+      product_rating: req.body.product_rating,
       product_unit: req.body.product_unit,
       product_link: req.body.product_link,
       product_description: req.body.product_description,
@@ -75,6 +76,7 @@ router.put("/put/:id", async (req, res) => {
       { id: productId },
       {
         product_name: req.body.product_name,
+        product_rating: req.body.product_rating,
         product_unit: req.body.product_unit,
         product_link: req.body.product_link,
         product_description: req.body.product_description,
