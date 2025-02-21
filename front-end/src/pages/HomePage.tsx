@@ -84,7 +84,7 @@ function HomePage() {
       <div className="mx-36">
         <SearchBar handleSearch={(val: string) => setSearch(val)} />
         <div className="flex flex-row w-full h-full">
-          <div className="w-1/5 p-4">
+          <div className="w-1/6 p-4">
             <p className="text-xl font-bold font-mono">Filter</p>
             <div className="p-2">
               <div>
@@ -137,12 +137,12 @@ function HomePage() {
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-4 gap-6 mt-6 w-4/5">
+          <div className="grid grid-cols-4 gap-6 mt-6 w-5/6">
             {filteredProducts.map((product) => (
               <div
                 onClick={() => navigate(`/product/${product.id}`)}
                 key={product.id}
-                className="flex flex-col w-80 h-80 bg-white shadow-md rounded-lg overflow-hidden 
+                className="flex flex-col w-80 h-96 bg-white shadow-md rounded-lg overflow-hidden 
                    transition-transform transform hover:scale-105 hover:shadow-xl"
               >
                 {/* Image container */}
