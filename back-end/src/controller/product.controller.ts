@@ -6,7 +6,9 @@ const router = Router({ mergeParams: true });
 // router to get all products
 router.get("/", async (req, res) => {
   try {
-    const products = await SM.productRepository.find();
+    const products = await SM.productRepository.find({
+      relations: ["category"],
+    });
 
     if (products && products.length > 0) {
       return res.status(200).send(products);
@@ -43,6 +45,7 @@ router.get("/:id", async (req, res) => {
 
 // router to create a new product
 router.post("/", async (req, res) => {
+  console.log("Request body:", req.body);
   try {
     const newproduct = await SM.productRepository.save({
       product_name: req.body.product_name,
@@ -51,8 +54,9 @@ router.post("/", async (req, res) => {
       product_description: req.body.product_description,
       product_price: req.body.product_price,
       product_image: req.body.product_image,
+      category: req.body.category,
     });
-
+    console.log("New product in controller:", newproduct);
     return res.status(201).send(newproduct);
   } catch (error) {
     // throw internal server error if there is an error
@@ -70,7 +74,13 @@ router.put("/put/:id", async (req, res) => {
     const updateResult = await SM.productRepository.update(
       { id: productId },
       {
-        product_name: req.body.name,
+        product_name: req.body.product_name,
+        product_unit: req.body.product_unit,
+        product_link: req.body.product_link,
+        product_description: req.body.product_description,
+        product_price: req.body.product_price,
+        product_image: req.body.product_image,
+        category: req.body.category,
       }
     );
 

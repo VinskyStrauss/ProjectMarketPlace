@@ -10,5 +10,5 @@ export interface Product {
   product_price: string;
   product_image: string;
   user?: User;
-  categories?: Category[];
+  category?: Category | null;
 }

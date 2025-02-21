@@ -25,6 +25,7 @@ const seed = async () => {
   await SM.userRepository.save(users);
 
   //Create a new array of categories such as phone, laptop
+
   const categories = [
     {
       id: 1,
@@ -33,7 +34,7 @@ const seed = async () => {
     },
     {
       id: 2,
-      category_name: "Laptop",
+      category_name: "Laptop & Computer",
       category_description: "Laptop description",
     },
   ];
@@ -79,7 +80,7 @@ const seed = async () => {
       newProduct.product_image = productData.product_photo; // Correct key for image
       newProduct.product_link = productData.product_url;
       newProduct.product_unit = 100; // Default unit
-      newProduct.categories = categories[0];
+      newProduct.category = categories.at(0);
 
       products.push(newProduct);
     }
@@ -114,8 +115,6 @@ const seed = async () => {
     const products: Product[] = [];
 
     for (let i = 0; i < response.data.data.products.length; i++) {
-      console.log("Product", response.data.data.products[i]);
-
       const productData = response.data.data.products[i];
 
       const newProduct = new Product();
@@ -125,8 +124,9 @@ const seed = async () => {
       newProduct.product_image = productData.product_photo; // Correct key for image
       newProduct.product_link = productData.product_url;
       newProduct.product_unit = 100; // Default unit
-      newProduct.categories = categories[1];
+      newProduct.category = categories.at(1);
 
+      console.log("New Product", newProduct);
       products.push(newProduct);
     }
 

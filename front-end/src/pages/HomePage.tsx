@@ -48,19 +48,21 @@ function HomePage() {
           selectedBrands.some((brand) =>
             product.product_name.toLowerCase().includes(brand.toLowerCase())
           );
-
         const matchesCategory =
           selectedCategories.length === 0 ||
           selectedCategories.some((category) =>
-            product.categories
-              ?.map((c) => c.category_name.toLowerCase())
+            product.category?.category_name
+              .toLowerCase()
               .includes(category.toLowerCase())
           );
 
         return matchesSearch && matchesPrice && matchesBrand && matchesCategory;
       })
     );
-  }, [search, price, selectedBrands, products]);
+    console.log("Categories", selectedCategories);
+    console.log("Brands", selectedBrands);
+    console.log("Filtered Products", filteredProducts);
+  }, [search, price, selectedBrands, selectedCategories, products]);
 
   // Handle brand selection
   const handleBrandSelection = (brand: string) => {
@@ -72,7 +74,7 @@ function HomePage() {
   const handleCategorySelection = (category: string) => {
     setSelectedCategories((prev) =>
       prev.includes(category)
-        ? prev.filter((b) => b !== category)
+        ? prev.filter((c) => c !== category)
         : [...prev, category]
     );
   };

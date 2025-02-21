@@ -31,5 +31,5 @@ export class Product {
 
   // Many Products can belong to One Category
   @ManyToOne(() => Category, (category) => category.id)
-  categories?: Category;
+  category?: Category;
 }

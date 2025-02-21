@@ -13,6 +13,6 @@ export class Category {
   category_description: string;
 
   // One Category can have multiple Products
-  @OneToMany(() => Product, (product) => product.categories)
-  products?: Product[];
+  @OneToMany(() => Product, (product) => product.id)
+  ctrgyProducts?: Product[];
 }

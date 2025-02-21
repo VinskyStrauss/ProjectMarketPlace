@@ -18,6 +18,7 @@ function ProductPage() {
         setProduct(product);
       });
   }, [param.id]);
+  console.log("Product", product);
   return (
     <PageLayout>
       <div className="mx-36">
