@@ -12,6 +12,8 @@ function HomePage() {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  //sort products
+  const [sort, setSort] = useState<string>("");
 
   //State for search
   const [search, setSearch] = useState<string>("");
@@ -34,36 +36,48 @@ function HomePage() {
   //Filter products based on search
   // Update filters when search, price, or brands change
   useEffect(() => {
-    console.log("Products", products);
-    setFilteredProducts(
-      products.filter((product) => {
-        const matchesSearch = product.product_name
-          .toLowerCase()
-          .includes(search.toLowerCase());
+    let updatedProducts = products.filter((product) => {
+      const matchesSearch = product.product_name
+        .toLowerCase()
+        .includes(search.toLowerCase());
 
-        const matchesPrice =
-          parseFloat(product.product_price.replace("$", "")) <= price;
+      const matchesPrice =
+        parseFloat(product.product_price.replace("$", "")) <= price;
 
-        const matchesBrand =
-          selectedBrands.length === 0 ||
-          selectedBrands.some((brand) =>
-            product.product_name.toLowerCase().includes(brand.toLowerCase())
-          );
-        const matchesCategory =
-          selectedCategories.length === 0 ||
-          selectedCategories.some((category) =>
-            product.category?.category_name
-              .toLowerCase()
-              .includes(category.toLowerCase())
-          );
+      const matchesBrand =
+        selectedBrands.length === 0 ||
+        selectedBrands.some((brand) =>
+          product.product_name.toLowerCase().includes(brand.toLowerCase())
+        );
 
-        return matchesSearch && matchesPrice && matchesBrand && matchesCategory;
-      })
-    );
-    console.log("Categories", selectedCategories);
-    console.log("Brands", selectedBrands);
-    console.log("Filtered Products", filteredProducts);
-  }, [search, price, selectedBrands, selectedCategories, products]);
+      const matchesCategory =
+        selectedCategories.length === 0 ||
+        selectedCategories.some((category) =>
+          product.category?.category_name
+            .toLowerCase()
+            .includes(category.toLowerCase())
+        );
+
+      return matchesSearch && matchesPrice && matchesBrand && matchesCategory;
+    });
+
+    // **Ensure sorting works correctly**
+    if (sort === "asc") {
+      updatedProducts = [...updatedProducts].sort((a, b) => {
+        const priceA = parseFloat(a.product_price.replace(/[^0-9.]/g, ""));
+        const priceB = parseFloat(b.product_price.replace(/[^0-9.]/g, ""));
+        return priceA - priceB; // Ascending order
+      });
+    } else if (sort === "desc") {
+      updatedProducts = [...updatedProducts].sort((a, b) => {
+        const priceA = parseFloat(a.product_price.replace(/[^0-9.]/g, ""));
+        const priceB = parseFloat(b.product_price.replace(/[^0-9.]/g, ""));
+        return priceB - priceA; // Descending order
+      });
+    }
+
+    setFilteredProducts(updatedProducts);
+  }, [search, price, selectedBrands, selectedCategories, sort, products]);
 
   // Handle brand selection
   const handleBrandSelection = (brand: string) => {
@@ -79,6 +93,7 @@ function HomePage() {
         : [...prev, category]
     );
   };
+
   return (
     <PageLayout>
       <div className="mx-36">
@@ -133,6 +148,26 @@ function HomePage() {
                     </span>
                     <span>${maxPrice}</span>
                   </div>
+                </div>
+                <div className="flex flex-col">
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="sort"
+                      checked={sort === "desc"}
+                      onChange={() => setSort("desc")}
+                    />
+                    <span>High to Low</span>
+                  </label>
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="sort"
+                      checked={sort === "asc"}
+                      onChange={() => setSort("asc")}
+                    />
+                    <span>Low to High</span>
+                  </label>
                 </div>
               </div>
             </div>
