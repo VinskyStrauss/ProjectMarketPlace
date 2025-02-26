@@ -4,12 +4,11 @@ import { Product } from "../interfaces/Product";
 import { PageLayout } from "../layouts/PageLayout";
 import { IoMdArrowRoundBack } from "react-icons/io";
 
-function ProductPage() {
+function ProductEditPage() {
   const navigate = useNavigate();
   const param = useParams();
   const [product, setProduct] = useState<Product>();
-  const [quantity, setQuantity] = useState(1);
-
+  const [updatedProduct, setUpdatedProduct] = useState<Product>();
   useEffect(() => {
     const productApiURL = `http://localhost:3000/products/${param.id}`;
     fetch(productApiURL)
@@ -19,26 +18,20 @@ function ProductPage() {
       });
   }, [param.id]);
   console.log("Product", product);
+  if (!product) {
+    return <div>Loading...</div>;
+  }
   return (
     <PageLayout>
       <div className="mx-36">
-        <div className="flex flex-row  justify-between">
-          <button
-            className="bg-red-500 text-white p-2 rounded-md"
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
-            <IoMdArrowRoundBack />
-          </button>
-
-          <button
-            className="bg-amber-300 text-white p-2 rounded-md"
-            onClick={() => navigate(`/product-edit/${product?.id}`)}
-          >
-            Edit Page
-          </button>
-        </div>
+        <button
+          className="bg-red-500 text-white p-2 rounded-md"
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
+          Cancel
+        </button>
         <div className="flex flex-row gap-5 w-full mt-10">
           <div className="w-1/4">
             <img
@@ -49,7 +42,18 @@ function ProductPage() {
           </div>
           <div className="flex flex-row justify-between w-2/4">
             <div>
-              <h1 className="font-bold text-2xl">{product?.product_name}</h1>
+              <textarea
+                className="font-bold text-2xl w-full resize-none overflow-hidden break-words"
+                value={product?.product_name}
+                rows={Math.ceil((product?.product_name?.length || 1) / 50)} // Adjust rows dynamically
+                onChange={(e) =>
+                  setUpdatedProduct({
+                    ...product,
+                    product_name: e.target.value,
+                  })
+                }
+              />
+
               <a
                 href={product?.product_link}
                 target="_blank"
@@ -78,4 +82,4 @@ function ProductPage() {
   );
 }
 
-export default ProductPage;
+export default ProductEditPage;
